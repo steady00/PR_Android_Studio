@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -71,6 +72,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initView() {
+        // clickable pada button di custom header
+        NavigationView navigationView = findViewById(R.id.navView);
+        View headerView = getLayoutInflater().inflate(R.layout.nav_header_layout,
+                navigationView, false);
+        navigationView.addHeaderView(headerView);
+
+        Button btn_manage_account = headerView.findViewById(R.id.btn_manage_account);
+        btn_manage_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Test Header Click", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, ManageAccountActivity.class));
+            }
+        });
+
         // custom toolbar
         setSupportActionBar(binding.toolbar);
 
@@ -111,11 +127,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_about_us:
                         fragment = new AboutUsFragment();
                         getSupportActionBar().setTitle("About Us");
-                        binding.drawer.closeDrawer(GravityCompat.START);
-                        callFragment(fragment);
-                        break;
-                    case R.id.btn_manage_account:
-                        fragment = new ManageAccountFragment();
                         binding.drawer.closeDrawer(GravityCompat.START);
                         callFragment(fragment);
                         break;
